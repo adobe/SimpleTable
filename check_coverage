@@ -1,0 +1,9 @@
+# This script depends on 'groovy' and 'lcov' being installed. You can install them with
+# homebrew with the following commands:
+#
+# brew install groovy
+# brew install lcov
+
+rm -r coverage_reports
+groovy http://frankencover.it/with -debug -source-dir ./AST -output-dir coverage_reports
+open coverage_reports/coverage/index.html
