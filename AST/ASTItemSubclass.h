@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) setCellPropertyValue: (id __nullable) value forKeyPath: (NSString*) keyPath;
 
-- (id) resolveTargetObjectReference: (id) objectReference;
+- (id __nullable) resolveTargetObjectReference: (id __nullable) objectReference;
 - (void) sendAction: (SEL) action to: (id) target;
 
 @end

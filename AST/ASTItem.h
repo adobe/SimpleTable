@@ -202,7 +202,7 @@ typedef void (^ASTItemActionBlock)( ASTItem* item );
 
 @interface UITableViewCell( ASTItem )
 
-@property (nonatomic,readonly) UITableView* tableView;
+@property (nullable,nonatomic,readonly) UITableView* tableView;
 
 // These properties are useful for using with UIAppearance.
 @property (nullable,nonatomic) UIColor* selectedBackgroundViewBackgroundColor UI_APPEARANCE_SELECTOR;
