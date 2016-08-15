@@ -81,6 +81,8 @@ NSString* const AST_cell_imageView_highlightedImageName = @"cellProperties.image
 
 NSString* const AST_headerText = @"headerText";
 NSString* const AST_footerText = @"footerText";
+NSString* const AST_headerView = @"headerView";
+NSString* const AST_footerView = @"footerView";
 NSString* const AST_items = @"items";
 
 //------------------------------------------------------------------------------

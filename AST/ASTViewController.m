@@ -244,6 +244,8 @@ static ASTSection* sectionFromObject( id sectionObject )
 	self.tableView.estimatedRowHeight = 44;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 	self.tableView.allowsMultipleSelectionDuringEditing = NO;
+	self.tableView.estimatedSectionHeaderHeight = 44;
+	self.tableView.estimatedSectionFooterHeight = 44;
 }
 
 //------------------------------------------------------------------------------
@@ -725,6 +727,28 @@ static ASTSection* sectionFromObject( id sectionObject )
 
 //------------------------------------------------------------------------------
 
+- (UIView*) tableView: (UITableView*) tableView viewForHeaderInSection: (NSInteger) section
+{
+	if( self.tableView.style == UITableViewStyleGrouped ) {
+		ASTSection* sectionData = _data[ section ];
+		return sectionData.headerView;
+	}
+	return nil;
+}
+
+//------------------------------------------------------------------------------
+
+- (UIView*) tableView: (UITableView*) tableView viewForFooterInSection: (NSInteger) section
+{
+	if( self.tableView.style == UITableViewStyleGrouped ) {
+		ASTSection* sectionData = _data[ section ];
+		return sectionData.footerView;
+	}
+	return nil;
+}
+
+//------------------------------------------------------------------------------
+
 - (BOOL) tableView: (UITableView*) tableView canEditRowAtIndexPath: (NSIndexPath*) indexPath
 {
 	ASTItem* item = [ self itemAtIndexPath: indexPath ];
@@ -741,6 +765,20 @@ static ASTSection* sectionFromObject( id sectionObject )
 	if( item.deleteBlock ) {
 		item.deleteBlock( item );
 	}
+}
+
+//------------------------------------------------------------------------------
+
+- (CGFloat) tableView: (UITableView*) tableView heightForHeaderInSection: (NSInteger) section
+{
+	return UITableViewAutomaticDimension;
+}
+
+//------------------------------------------------------------------------------
+
+- (CGFloat) tableView: (UITableView*) tableView heightForFooterInSection: (NSInteger) section
+{
+	return UITableViewAutomaticDimension;
 }
 
 //------------------------------------------------------------------------------

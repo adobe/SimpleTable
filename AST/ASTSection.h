@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString* const AST_headerText;
 extern NSString* const AST_footerText;
+extern NSString* const AST_headerView;
+extern NSString* const AST_footerView;
 extern NSString* const AST_items;
 
 //------------------------------------------------------------------------------
@@ -93,6 +95,10 @@ extern NSString* const AST_items;
 @property (nullable,nonatomic) NSString* headerText;
 /// The text to be displayed in the footer.
 @property (nullable,nonatomic) NSString* footerText;
+/// The view to be used as the header view.
+@property (nullable,nonatomic) UIView* headerView;
+/// The view to be used as the footer view.
+@property (nullable,nonatomic) UIView* footerView;
 
 // Containment
 

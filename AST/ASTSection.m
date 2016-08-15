@@ -120,6 +120,8 @@
 
 	self.headerText = dict[ AST_headerText ];
 	self.footerText = dict[ AST_footerText ];
+	self.headerView = dict[ AST_headerView ];
+	self.footerView = dict[ AST_footerView ];
 	
 	self.items = dict[ AST_items ];
 }
