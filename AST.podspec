@@ -1,5 +1,5 @@
 #
-#  Be sure to run `pod spec lint AdobeSimpleTable.podspec' to ensure this is a
+#  Be sure to run `pod spec lint AST.podspec' to ensure this is a
 #  valid spec and to remove all comments including this before submitting the spec.
 #
 #  To learn more about Podspec attributes see http://docs.cocoapods.org/specification.html
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  s.name         = "AdobeSimpleTable"
+  s.name         = "AST"
   s.version      = "1.0.0"
   s.summary      = "A simple data model for UITableView contents."
 
@@ -77,7 +77,7 @@ Provides a simple data model for UITableView contents. The primary use case is t
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/adobe/SimpleTable.git", :tag => "#{master}" }
+  s.source       = { :git => "https://github.com/adobe/SimpleTable.git", :tag => "master" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -89,7 +89,7 @@ Provides a simple data model for UITableView contents. The primary use case is t
   #
 
   s.source_files  = "AST", "AST/*.{h,m}"
-  s.exclude_files = "Classes/Exclude"
+  s.exclude_files = "AST/*Tests.m"
 
   s.public_header_files = "AST/*.h"
 
