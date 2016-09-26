@@ -239,13 +239,16 @@ static ASTSection* sectionFromObject( id sectionObject )
 {
 	[ super loadView ];
 	
+	UITableView* tableView = self.tableView;
 	// Note that setting both the estimatedRowHeight and rowHeight seem to be
 	// necessary to get the tableview to correctly handle autolayout.
-	self.tableView.estimatedRowHeight = 44;
-	self.tableView.rowHeight = UITableViewAutomaticDimension;
-	self.tableView.allowsMultipleSelectionDuringEditing = NO;
-	self.tableView.estimatedSectionHeaderHeight = 44;
-	self.tableView.estimatedSectionFooterHeight = 44;
+	tableView.estimatedRowHeight = 44;
+	tableView.rowHeight = UITableViewAutomaticDimension;
+	tableView.estimatedSectionHeaderHeight = 44;
+	tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
+	tableView.estimatedSectionFooterHeight = 44;
+	tableView.sectionFooterHeight = UITableViewAutomaticDimension;
+	tableView.allowsMultipleSelectionDuringEditing = NO;
 }
 
 //------------------------------------------------------------------------------
