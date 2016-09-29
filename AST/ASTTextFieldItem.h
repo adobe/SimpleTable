@@ -60,6 +60,8 @@ extern NSString* const AST_cell_textInput_delegate;
 @property (nullable,weak,nonatomic) id textFieldReturnKeyTarget;
 @property (nullable,nonatomic) SEL textFieldReturnKeyAction;
 
+- (void) becomeFirstResponder;
+
 @end
 
 //------------------------------------------------------------------------------

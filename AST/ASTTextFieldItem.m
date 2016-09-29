@@ -115,6 +115,17 @@
 
 //------------------------------------------------------------------------------
 
+- (void) becomeFirstResponder
+{
+	// Note that we don't animate the scroll because we want the cell to be
+	// available synchronously.
+	[ self scrollToPosition: UITableViewScrollPositionBottom animated: NO ];
+	ASTTextFieldItemCell* cell = self.cell;
+	[ cell.textInput becomeFirstResponder ];
+}
+
+//------------------------------------------------------------------------------
+
 @end
 
 //------------------------------------------------------------------------------

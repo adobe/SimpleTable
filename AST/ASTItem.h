@@ -196,6 +196,10 @@ typedef void (^ASTItemActionBlock)( ASTItem* item );
 /// animation.
 - (void) removeFromContainerWithAnimation: (UITableViewRowAnimation) rowAnimation;
 
+/// Scrolls the table view so that this item is visible.
+- (void) scrollToPosition: (UITableViewScrollPosition) position
+		animated: (BOOL) animated;
+
 @end
 
 //------------------------------------------------------------------------------

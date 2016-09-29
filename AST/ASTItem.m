@@ -503,6 +503,20 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 
 //------------------------------------------------------------------------------
 
+- (void) scrollToPosition: (UITableViewScrollPosition) position
+		animated: (BOOL) animated
+{
+	NSIndexPath* indexPath = self.indexPath;
+	UITableView* tableView = self.tableViewController.tableView;
+	if( tableView && indexPath ) {
+		[ tableView scrollToRowAtIndexPath: indexPath
+				atScrollPosition: position
+				animated: animated ];
+	}
+}
+
+//------------------------------------------------------------------------------
+
 @end
 
 //------------------------------------------------------------------------------
