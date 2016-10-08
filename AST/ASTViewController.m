@@ -244,10 +244,6 @@ static ASTSection* sectionFromObject( id sectionObject )
 	// necessary to get the tableview to correctly handle autolayout.
 	tableView.estimatedRowHeight = 44;
 	tableView.rowHeight = UITableViewAutomaticDimension;
-	tableView.estimatedSectionHeaderHeight = 44;
-	tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
-	tableView.estimatedSectionFooterHeight = 44;
-	tableView.sectionFooterHeight = UITableViewAutomaticDimension;
 	tableView.allowsMultipleSelectionDuringEditing = NO;
 }
 
@@ -771,9 +767,26 @@ static ASTSection* sectionFromObject( id sectionObject )
 }
 
 //------------------------------------------------------------------------------
+// Note that we are measuring the height of the headerView if it is specified.
+// Normally we would want to let UITableView use auto layout but there appears
+// to be an issue with using both headerText or footerText and header and
+// footer views in the same table. When this is done there is no way to have
+// both layout correctly at the same time. So we are choosing to measure the
+// header and footer views because that is the only option that we can measure
+// correctly. We could choose to measure the text but there is no way to get
+// the font that is used by the system.
 
 - (CGFloat) tableView: (UITableView*) tableView heightForHeaderInSection: (NSInteger) section
 {
+	assert( self.tableView.style == UITableViewStyleGrouped );
+	ASTSection* sectionData = _data[ section ];
+	UIView* headerView = sectionData.headerView;
+	if( headerView ) {
+		CGSize fittingSize = tableView.bounds.size;
+		fittingSize.height = 10000;
+		return [ headerView systemLayoutSizeFittingSize: fittingSize ].height;
+	}
+	
 	return UITableViewAutomaticDimension;
 }
 
@@ -781,6 +794,15 @@ static ASTSection* sectionFromObject( id sectionObject )
 
 - (CGFloat) tableView: (UITableView*) tableView heightForFooterInSection: (NSInteger) section
 {
+	assert( self.tableView.style == UITableViewStyleGrouped );
+	ASTSection* sectionData = _data[ section ];
+	UIView* footerView = sectionData.footerView;
+	if( footerView ) {
+		CGSize fittingSize = tableView.bounds.size;
+		fittingSize.height = 10000;
+		return [ footerView systemLayoutSizeFittingSize: fittingSize ].height;
+	}
+	
 	return UITableViewAutomaticDimension;
 }
 
