@@ -348,6 +348,15 @@
 	_footerText = footerText;
 	
 	UITableView* tableView = self.tableViewController.tableView;
+	
+	// Check to see if the tableView has been shown yet, if not then do not
+	// bother to reload or invalidate the layout. Doing a reload before the
+	// view is shown can cause some strange animations when the table is first
+	// shown.
+	if( tableView.window == nil ) {
+		return;
+	}
+	
 	NSInteger index = self.index;
 	if( tableView && index >= 0 ) {
 		UITableViewHeaderFooterView* footerView = [ tableView footerViewForSection: index ];
