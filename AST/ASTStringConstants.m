@@ -53,6 +53,8 @@ NSString* const AST_targetTableViewController = @"AST_targetTableViewController"
 
 NSString* const AST_prefKey = @"prefKey";
 
+NSString* const AST_minimumHeight = @"minimumHeight";
+
 NSString* const AST_representedObject = @"representedObject";
 
 //------------------------------------------------------------------------------

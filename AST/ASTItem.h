@@ -45,6 +45,7 @@ extern NSString* const AST_selectActionTarget;
 extern NSString* const AST_selectActionBlock;
 extern NSString* const AST_representedObject;
 extern NSString* const AST_prefKey;
+extern NSString* const AST_minimumHeight;
 
 extern NSString* const AST_cell_indentationLevel;
 extern NSString* const AST_cell_indentationWidth;
@@ -154,6 +155,11 @@ typedef void (^ASTItemActionBlock)( ASTItem* item );
 /// Returns a copy of the cell properties. These are all of the properties that
 /// will be set on a cell when it is created.
 @property (readonly,copy) NSDictionary* cellProperties;
+
+/// The minimum height for the row. The default is 0 which indicates the row
+/// height is determined by auto layout. If the row would be taller than the
+/// minimumHeight due to auto layout it will be the taller height.
+@property CGFloat minimumHeight;
 
 // Selection
 

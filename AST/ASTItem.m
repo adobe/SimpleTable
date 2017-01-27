@@ -54,6 +54,14 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 
 //------------------------------------------------------------------------------
 
+@interface ASTItem() {
+	NSLayoutConstraint* _minimumHeightConstraint;
+}
+
+@end
+
+//------------------------------------------------------------------------------
+
 @implementation ASTItem
 
 //------------------------------------------------------------------------------
@@ -183,6 +191,11 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 		
 		_cellStyle = [ dict[ AST_cellStyle ] integerValue ];
 		_cellReuseIdentifier = dict[ AST_cellReuseIdentifier ];
+		
+		id minimumHeightValue = dict[ AST_minimumHeight ];
+		if( minimumHeightValue ) {
+			_minimumHeight = [ minimumHeightValue floatValue ];
+		}
 		
 		NSMutableDictionary* cellProperties = [ NSMutableDictionary dictionary ];
 		for( NSString* key in dict ) {
@@ -361,6 +374,8 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 		id value = _cellProperties[ keyPath ];
 		[ self setCellPropertyValue: value forKeyPath: keyPath ];
 	}
+	
+	[ self minimumHeightChanged ];
 }
 
 //------------------------------------------------------------------------------
@@ -436,6 +451,40 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 
 //------------------------------------------------------------------------------
 
+- (void) setMinimumHeight: (CGFloat) minimumHeight
+{
+	_minimumHeight = minimumHeight;
+	[ self minimumHeightChanged ];
+}
+
+//------------------------------------------------------------------------------
+
+- (void) minimumHeightChanged
+{
+	if( _minimumHeight == 0 && _minimumHeightConstraint != nil ) {
+		_minimumHeightConstraint.active = NO;
+		_minimumHeightConstraint = nil;
+	}
+	if( _minimumHeight > 0 && _cell != nil ) {
+		if( _minimumHeightConstraint != nil ) {
+			_minimumHeightConstraint.constant = _minimumHeight;
+		} else {
+			_minimumHeightConstraint = [ NSLayoutConstraint
+				constraintWithItem: _cell.contentView
+				attribute: NSLayoutAttributeHeight
+				relatedBy: NSLayoutRelationGreaterThanOrEqual
+				toItem: nil
+				attribute: NSLayoutAttributeHeight
+				multiplier: 1
+				constant: _minimumHeight
+			];
+			_minimumHeightConstraint.active = YES;
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+
 - (void) performSelectionAction
 {
 	if( _selectAction ) {
@@ -499,6 +548,8 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 {
 	// The cell is being removed from the table so release our reference.
 	_cell = nil;
+	_minimumHeightConstraint.active = NO;
+	_minimumHeightConstraint = nil;
 }
 
 //------------------------------------------------------------------------------
