@@ -35,6 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString* const AST_textViewValueActionKey;
 extern NSString* const AST_textViewValueTargetKey;
+extern NSString* const AST_textViewReturnKeyActionKey;
+extern NSString* const AST_textViewReturnKeyTargetKey;
+
 extern NSString* const AST_cell_textInput_minHeightInLines;
 extern NSString* const AST_cell_textInput_maxHeightInLines;
 
@@ -46,6 +49,10 @@ extern NSString* const AST_cell_textInput_maxHeightInLines;
 
 @property (nullable,assign,nonatomic) id textViewValueTarget;
 @property (nullable,assign,nonatomic) SEL textViewValueAction;
+@property (nullable,weak,nonatomic) id textViewReturnKeyTarget;
+@property (nullable,nonatomic) SEL textViewReturnKeyAction;
+
+- (void) becomeFirstResponder;
 
 @end
 

@@ -106,6 +106,10 @@ NSString* const AST_cell_textInput_delegate = @"cellProperties.textInput.delegat
 
 //------------------------------------------------------------------------------
 
+NSString* const AST_textViewValueActionKey = @"textViewValueActionKey";
+NSString* const AST_textViewValueTargetKey = @"textViewValueTargetKey";
+NSString* const AST_textViewReturnKeyActionKey = @"textViewReturnKeyActionKey";
+NSString* const AST_textViewReturnKeyTargetKey = @"textViewReturnKeyTargetKey";
 NSString* const AST_cell_textInput_minHeightInLines = @"cellProperties.textInput.minHeightInLines";
 NSString* const AST_cell_textInput_maxHeightInLines = @"cellProperties.textInput.maxHeightInLines";
 

@@ -47,6 +47,22 @@ static void* ASTTextViewItemCellTextContext;
 	self = [ super initWithDict: dict ];
 	if( self ) {
 		self.cellClass = [ ASTTextViewItemCell class ];
+		
+		id actionValue = dict[ AST_textViewValueActionKey ];
+		if( actionValue ) {
+			NSAssert( [ actionValue isKindOfClass: [ NSString class ] ],
+					@"%@ should be of type NSString", AST_textViewValueActionKey );
+			_textViewValueAction = NSSelectorFromString( actionValue );
+		}
+		_textViewValueTarget = dict[ AST_textViewValueTargetKey ];
+
+		id returnActionValue = dict[ AST_textViewReturnKeyActionKey ];
+		if( returnActionValue ) {
+			NSAssert( [ returnActionValue isKindOfClass: [ NSString class ] ],
+					@"%@ should be of type NSString", AST_textViewReturnKeyActionKey );
+			_textViewReturnKeyAction = NSSelectorFromString( returnActionValue );
+		}
+		_textViewReturnKeyTarget = dict[ AST_textViewReturnKeyTargetKey ];
 	}
 	return self;
 }
@@ -58,10 +74,12 @@ static void* ASTTextViewItemCellTextContext;
 	[ super loadCell ];
 	
 	if( self.cellLoaded ) {
-		ASTTextFieldItemCell* textFieldCell = (ASTTextFieldItemCell*)self.cell;
+		ASTTextViewItemCell* textViewCell = (ASTTextViewItemCell*)self.cell;
 		NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
 		[ nc addObserver: self selector: @selector(textViewDidChange:)
-				name: UITextViewTextDidChangeNotification object: textFieldCell.textInput ];
+				name: UITextViewTextDidChangeNotification object: textViewCell.textInput ];
+		[ nc addObserver: self selector: @selector(textViewEditingDidChangeOnExit:)
+				name: UITextViewTextDidEndEditingNotification object: textViewCell.textInput ];
 	}
 }
 
@@ -70,10 +88,12 @@ static void* ASTTextViewItemCellTextContext;
 - (void) didEndDisplayingCell
 {
 	if( self.cellLoaded ) {
-		ASTTextFieldItemCell* textFieldCell = (ASTTextFieldItemCell*)self.cell;
+		ASTTextFieldItemCell* textViewCell = (ASTTextFieldItemCell*)self.cell;
 		NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
 		[ nc removeObserver: self name: UITextViewTextDidChangeNotification
-				object: textFieldCell.textInput ];
+				object: textViewCell.textInput ];
+		[ nc removeObserver: self name: UITextViewTextDidEndEditingNotification
+				object: textViewCell.textInput ];
 	}
 	[ super didEndDisplayingCell ];
 }
@@ -89,6 +109,27 @@ static void* ASTTextViewItemCellTextContext;
 		[ self sendAction: _textViewValueAction
 				to: [ self resolveTargetObjectReference: _textViewValueTarget ] ];
 	}
+}
+
+//------------------------------------------------------------------------------
+
+- (void) textViewEditingDidChangeOnExit: (id) sender
+{
+	if( _textViewReturnKeyAction ) {
+		[ self sendAction: _textViewReturnKeyAction
+				to: [ self resolveTargetObjectReference: _textViewReturnKeyTarget ] ];
+	}
+}
+
+//------------------------------------------------------------------------------
+
+- (void) becomeFirstResponder
+{
+	// Note that we don't animate the scroll because we want the cell to be
+	// available synchronously.
+	[ self scrollToPosition: UITableViewScrollPositionBottom animated: NO ];
+	ASTTextViewItemCell* cell = self.cell;
+	[ cell.textInput becomeFirstResponder ];
 }
 
 //------------------------------------------------------------------------------
