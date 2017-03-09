@@ -52,6 +52,8 @@ extern NSString* const AST_cell_textInput_maxHeightInLines;
 @property (nullable,weak,nonatomic) id textViewReturnKeyTarget;
 @property (nullable,nonatomic) SEL textViewReturnKeyAction;
 
+@property(nonatomic,readonly,getter=isEditing) BOOL editing;
+
 - (void) becomeFirstResponder;
 
 @end

@@ -134,6 +134,17 @@ static void* ASTTextViewItemCellTextContext;
 
 //------------------------------------------------------------------------------
 
+- (BOOL) isEditing
+{
+	if( [ self cellLoaded ] ) {
+		ASTTextViewItemCell* cell = self.cell;
+		return [ cell.textInput isFirstResponder ];
+	}
+	return NO;
+}
+
+//------------------------------------------------------------------------------
+
 @end
 
 //------------------------------------------------------------------------------
