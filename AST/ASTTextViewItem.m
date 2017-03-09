@@ -109,6 +109,9 @@ static void* ASTTextViewItemCellTextContext;
 		[ self sendAction: _textViewValueAction
 				to: [ self resolveTargetObjectReference: _textViewValueTarget ] ];
 	}
+	
+	NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
+	[ nc postNotificationName: UITextViewTextDidChangeNotification object: self ];
 }
 
 //------------------------------------------------------------------------------
@@ -119,6 +122,9 @@ static void* ASTTextViewItemCellTextContext;
 		[ self sendAction: _textViewReturnKeyAction
 				to: [ self resolveTargetObjectReference: _textViewReturnKeyTarget ] ];
 	}
+	
+	NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
+	[ nc postNotificationName: UITextViewTextDidEndEditingNotification object: self ];
 }
 
 //------------------------------------------------------------------------------

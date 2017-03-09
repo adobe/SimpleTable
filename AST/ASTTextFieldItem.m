@@ -81,7 +81,7 @@
 				action: @selector(textFieldEditingChangedAction:)
 				forControlEvents: UIControlEventEditingChanged ];
 		[ textFieldCell.textInput addTarget: self
-				action: @selector(textFieldEditingDidChangeOnExitAction:)
+				action: @selector(textFieldEditingDidEndOnExitAction:)
 				forControlEvents: UIControlEventEditingDidEndOnExit ];
 		// Note that we never remove the target/action for the field. Since we
 		// own the field and the control holds the target weakly and controls
@@ -101,16 +101,22 @@
 		[ self sendAction: _textFieldValueAction
 				to: [ self resolveTargetObjectReference: _textFieldValueTarget ] ];
 	}
+	
+	NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
+	[ nc postNotificationName: UITextFieldTextDidChangeNotification object: self ];
 }
 
 //------------------------------------------------------------------------------
 
-- (void) textFieldEditingDidChangeOnExitAction: (id) sender
+- (void) textFieldEditingDidEndOnExitAction: (id) sender
 {
 	if( _textFieldReturnKeyAction ) {
 		[ self sendAction: _textFieldReturnKeyAction
 				to: [ self resolveTargetObjectReference: _textFieldReturnKeyTarget ] ];
 	}
+	
+	NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
+	[ nc postNotificationName: UITextFieldTextDidEndEditingNotification object: self ];
 }
 
 //------------------------------------------------------------------------------
