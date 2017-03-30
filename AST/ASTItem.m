@@ -186,7 +186,7 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 					@"Class \"%@\" is not a subclass of Class UITableViewCell", cellClassValue );
 		}
 		if( _cellClass == nil ) {
-			_cellClass = [ UITableViewCell class ];
+			_cellClass = [ ASTCell class ];
 		}
 		
 		_cellStyle = [ dict[ AST_cellStyle ] integerValue ];
@@ -717,5 +717,11 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 }
 
 //------------------------------------------------------------------------------
+
+@end
+
+//------------------------------------------------------------------------------
+
+@implementation ASTCell
 
 @end

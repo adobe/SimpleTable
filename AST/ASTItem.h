@@ -236,4 +236,10 @@ typedef void (^ASTItemActionBlock)( ASTItem* item );
 
 @end
 
+//------------------------------------------------------------------------------
+
+@interface ASTCell : UITableViewCell
+
+@end
+
 NS_ASSUME_NONNULL_END
