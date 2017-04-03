@@ -782,9 +782,20 @@ static ASTSection* sectionFromObject( id sectionObject )
 	ASTSection* sectionData = _data[ section ];
 	UIView* headerView = sectionData.headerView;
 	if( headerView ) {
+		// We put the headerView in the tableView during the layout because if
+		// the headerView is being styled by UIAppearance the layout will not be
+		// the right size if it is not in the tableView.
+		BOOL wasNotInSuperview = headerView.superview == nil;
+		if( wasNotInSuperview ) {
+			[ tableView addSubview: headerView ];
+		}
 		CGSize fittingSize = tableView.bounds.size;
 		fittingSize.height = 10000;
-		return [ headerView systemLayoutSizeFittingSize: fittingSize ].height;
+		CGFloat result = [ headerView systemLayoutSizeFittingSize: fittingSize ].height;
+		if( wasNotInSuperview ) {
+			[ headerView removeFromSuperview ];
+		}
+		return result;
 	}
 	
 	return UITableViewAutomaticDimension;
@@ -798,9 +809,20 @@ static ASTSection* sectionFromObject( id sectionObject )
 	ASTSection* sectionData = _data[ section ];
 	UIView* footerView = sectionData.footerView;
 	if( footerView ) {
+		// We put the footerView in the tableView during the layout because if
+		// the footerView is being styled by UIAppearance the layout will not be
+		// the right size if it is not in the tableView.
+		BOOL wasNotInSuperview = footerView.superview == nil;
+		if( wasNotInSuperview ) {
+			[ tableView addSubview: footerView ];
+		}
 		CGSize fittingSize = tableView.bounds.size;
 		fittingSize.height = 10000;
-		return [ footerView systemLayoutSizeFittingSize: fittingSize ].height;
+		CGFloat result = [ footerView systemLayoutSizeFittingSize: fittingSize ].height;
+		if( wasNotInSuperview ) {
+			[ footerView removeFromSuperview ];
+		}
+		return result;
 	}
 	
 	return UITableViewAutomaticDimension;
