@@ -126,7 +126,7 @@
 	// Note that we don't animate the scroll because we want the cell to be
 	// available synchronously.
 	[ self scrollToPosition: UITableViewScrollPositionBottom animated: NO ];
-	ASTTextFieldItemCell* cell = self.cell;
+	ASTTextFieldItemCell* cell = (ASTTextFieldItemCell*)self.cell;
 	[ cell.textInput becomeFirstResponder ];
 }
 
@@ -135,7 +135,7 @@
 - (BOOL) isEditing
 {
 	if( [ self cellLoaded ] ) {
-		ASTTextFieldItemCell* cell = self.cell;
+		ASTTextFieldItemCell* cell = (ASTTextFieldItemCell*)self.cell;
 		return [ cell.textInput isFirstResponder ];
 	}
 	return NO;

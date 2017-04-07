@@ -55,6 +55,7 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 //------------------------------------------------------------------------------
 
 @interface ASTItem() {
+	CGFloat _minimumHeight;
 	NSLayoutConstraint* _minimumHeightConstraint;
 }
 
@@ -455,6 +456,13 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 {
 	_minimumHeight = minimumHeight;
 	[ self minimumHeightChanged ];
+}
+
+//------------------------------------------------------------------------------
+
+- (CGFloat) minimumHeight
+{
+	return _minimumHeight;
 }
 
 //------------------------------------------------------------------------------
