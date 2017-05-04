@@ -148,7 +148,7 @@ typedef void (^ASTItemActionBlock)( ASTItem* item );
 
 /// Returns the cell to be used by this item. If the cell is nil then it will
 /// be created and returned.
-@property (readonly) UITableViewCell* cell;
+@property (readonly,weak) UITableViewCell* cell;
 /// Returns if a cell has been loaded for this item.
 @property (readonly) BOOL cellLoaded;
 

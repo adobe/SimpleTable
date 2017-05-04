@@ -56,7 +56,6 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 
 @interface ASTItem() {
 	CGFloat _minimumHeight;
-	NSLayoutConstraint* _minimumHeightConstraint;
 }
 
 @end
@@ -469,15 +468,22 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 
 - (void) minimumHeightChanged
 {
-	if( _minimumHeight == 0 && _minimumHeightConstraint != nil ) {
-		_minimumHeightConstraint.active = NO;
-		_minimumHeightConstraint = nil;
+	NSLayoutConstraint* minimumHeightConstraint = nil;
+	for( NSLayoutConstraint* constraint in _cell.constraints ) {
+		if( [ constraint.identifier isEqualToString: @"minimumHeightConstraint" ] ) {
+			minimumHeightConstraint = constraint;
+			break;
+		}
+	}
+	
+	if( _minimumHeight == 0 && minimumHeightConstraint != nil ) {
+		minimumHeightConstraint.active = NO;
 	}
 	if( _minimumHeight > 0 && _cell != nil ) {
-		if( _minimumHeightConstraint != nil ) {
-			_minimumHeightConstraint.constant = _minimumHeight;
+		if( minimumHeightConstraint != nil ) {
+			minimumHeightConstraint.constant = _minimumHeight;
 		} else {
-			_minimumHeightConstraint = [ NSLayoutConstraint
+			minimumHeightConstraint = [ NSLayoutConstraint
 				constraintWithItem: _cell.contentView
 				attribute: NSLayoutAttributeHeight
 				relatedBy: NSLayoutRelationGreaterThanOrEqual
@@ -486,7 +492,8 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 				multiplier: 1
 				constant: _minimumHeight
 			];
-			_minimumHeightConstraint.active = YES;
+			minimumHeightConstraint.identifier = @"minimumHeightConstraint";
+			minimumHeightConstraint.active = YES;
 		}
 	}
 }
@@ -554,10 +561,8 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 
 - (void) didEndDisplayingCell
 {
-	// The cell is being removed from the table so release our reference.
-	_cell = nil;
-	_minimumHeightConstraint.active = NO;
-	_minimumHeightConstraint = nil;
+	// The behavior of UITableView has changed so we can no longer depend on
+	// this call to mean the cell is going away.
 }
 
 //------------------------------------------------------------------------------
