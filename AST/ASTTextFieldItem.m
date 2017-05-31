@@ -213,8 +213,6 @@
 		[ self.contentView removeConstraints: _updatedConstraints ];
 	}
 	
-	[ super updateConstraints ];
-	
 	NSDictionary* metrics = @{
 		@"vMargin" : @8,
 		@"textFieldMinSize" : @80,
@@ -285,6 +283,9 @@
 	[ self.contentView addConstraints: newConstraints ];
 	
 	_updatedConstraints = newConstraints;
+
+	[ super updateConstraints ];
+	
 }
 
 // LCOV_EXCL_STOP
