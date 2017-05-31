@@ -338,4 +338,16 @@
 
 //------------------------------------------------------------------------------
 
+- (BOOL) resignFirstResponder
+{
+	// This fixes a problem with the text appearing to jump the first time the
+	// focus is moved off of the field. See:
+	// https://stackoverflow.com/questions/32765372/uitextfield-text-jumps#33334567
+	BOOL resigned = [ super resignFirstResponder ];
+	[ self layoutIfNeeded ];
+	return resigned;
+}
+
+//------------------------------------------------------------------------------
+
 @end
