@@ -134,16 +134,18 @@ static void* ASTTextViewItemCellTextContext;
 	// Note that we don't animate the scroll because we want the cell to be
 	// available synchronously.
 	[ self scrollToPosition: UITableViewScrollPositionBottom animated: NO ];
-	ASTTextViewItemCell* cell = self.cell;
-	[ cell.textInput becomeFirstResponder ];
+	if( [ self.cell isKindOfClass: [ ASTTextViewItemCell class ] ] ) {
+		ASTTextViewItemCell* cell = (ASTTextViewItemCell*)self.cell;
+		[ cell.textInput becomeFirstResponder ];
+	}
 }
 
 //------------------------------------------------------------------------------
 
 - (BOOL) isEditing
 {
-	if( [ self cellLoaded ] ) {
-		ASTTextViewItemCell* cell = self.cell;
+	if( [ self cellLoaded ] && [ self.cell isKindOfClass: [ ASTTextViewItemCell class ] ] ) {
+		ASTTextViewItemCell* cell = (ASTTextViewItemCell*)self.cell;
 		return [ cell.textInput isFirstResponder ];
 	}
 	return NO;
