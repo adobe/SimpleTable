@@ -33,7 +33,7 @@
 
 //------------------------------------------------------------------------------
 
-@interface ASTTextFieldItem() {
+@interface ASTTextFieldItem() <UITextFieldDelegate> {
 }
 
 @end
@@ -80,13 +80,7 @@
 		[ textFieldCell.textInput addTarget: self
 				action: @selector(textFieldEditingChangedAction:)
 				forControlEvents: UIControlEventEditingChanged ];
-		[ textFieldCell.textInput addTarget: self
-				action: @selector(textFieldEditingDidEndOnExitAction:)
-				forControlEvents: UIControlEventEditingDidEndOnExit ];
-		// Note that we never remove the target/action for the field. Since we
-		// own the field and the control holds the target weakly and controls
-		// auto release and/or don't care if the target/action is removed it
-		// would seem to be unnecessary.
+		textFieldCell.textInput.delegate = self;
 	}
 }
 
@@ -108,15 +102,13 @@
 
 //------------------------------------------------------------------------------
 
-- (void) textFieldEditingDidEndOnExitAction: (id) sender
+- (BOOL) textFieldShouldReturn: (UITextField*) textField
 {
 	if( _textFieldReturnKeyAction ) {
 		[ self sendAction: _textFieldReturnKeyAction
 				to: [ self resolveTargetObjectReference: _textFieldReturnKeyTarget ] ];
 	}
-	
-	NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
-	[ nc postNotificationName: UITextFieldTextDidEndEditingNotification object: self ];
+	return NO;
 }
 
 //------------------------------------------------------------------------------

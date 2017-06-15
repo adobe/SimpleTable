@@ -38,6 +38,12 @@ static void* ASTTextViewItemCellTextContext;
 
 //------------------------------------------------------------------------------
 
+@interface ASTTextViewItem() <UITextViewDelegate>
+
+@end
+
+//------------------------------------------------------------------------------
+
 @implementation ASTTextViewItem
 
 //------------------------------------------------------------------------------
@@ -75,32 +81,13 @@ static void* ASTTextViewItemCellTextContext;
 	
 	if( self.cellLoaded ) {
 		ASTTextViewItemCell* textViewCell = (ASTTextViewItemCell*)self.cell;
-		NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
-		[ nc addObserver: self selector: @selector(textViewDidChange:)
-				name: UITextViewTextDidChangeNotification object: textViewCell.textInput ];
-		[ nc addObserver: self selector: @selector(textViewEditingDidChangeOnExit:)
-				name: UITextViewTextDidEndEditingNotification object: textViewCell.textInput ];
+		textViewCell.textInput.delegate = self;
 	}
 }
 
 //------------------------------------------------------------------------------
 
-- (void) didEndDisplayingCell
-{
-	if( self.cellLoaded ) {
-		ASTTextFieldItemCell* textViewCell = (ASTTextFieldItemCell*)self.cell;
-		NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
-		[ nc removeObserver: self name: UITextViewTextDidChangeNotification
-				object: textViewCell.textInput ];
-		[ nc removeObserver: self name: UITextViewTextDidEndEditingNotification
-				object: textViewCell.textInput ];
-	}
-	[ super didEndDisplayingCell ];
-}
-
-//------------------------------------------------------------------------------
-
-- (void) textViewDidChange: (NSNotification*) notification
+- (void) textViewDidChange: (UITextView*) textView
 {
 	ASTTextViewItemCell* textFieldCell = (ASTTextViewItemCell*)self.cell;
 	[ self setCellPropertiesValue: textFieldCell.textInput.text forKeyPath: AST_cell_textInput_text ];
@@ -116,15 +103,17 @@ static void* ASTTextViewItemCellTextContext;
 
 //------------------------------------------------------------------------------
 
-- (void) textViewEditingDidChangeOnExit: (id) sender
+- (BOOL) textView: (UITextView*) textView
+		shouldChangeTextInRange: (NSRange) range
+		replacementText: (NSString*) text
 {
-	if( _textViewReturnKeyAction ) {
-		[ self sendAction: _textViewReturnKeyAction
-				to: [ self resolveTargetObjectReference: _textViewReturnKeyTarget ] ];
+	if( [ text isEqualToString: @"\n" ] ) {
+		if( _textViewReturnKeyAction ) {
+			[ self sendAction: _textViewReturnKeyAction
+					to: [ self resolveTargetObjectReference: _textViewReturnKeyTarget ] ];
+		}
 	}
-	
-	NSNotificationCenter* nc = [ NSNotificationCenter defaultCenter ];
-	[ nc postNotificationName: UITextViewTextDidEndEditingNotification object: self ];
+	return YES;
 }
 
 //------------------------------------------------------------------------------
