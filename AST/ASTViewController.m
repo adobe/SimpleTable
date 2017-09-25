@@ -526,6 +526,7 @@ static ASTSection* sectionFromObject( id sectionObject )
 	
 	UITableView* tableView = self.tableView;
 	
+	[ tableView beginUpdates ];
 	if( tableView.style == UITableViewStyleGrouped ) {
 		ASTSection* section = [ self sectionAtIndex: indexPath.section ];
 		[ section removeItemReferencesAtIndexes: @[ @(indexPath.row) ] ];
@@ -536,6 +537,7 @@ static ASTSection* sectionFromObject( id sectionObject )
 		[ _data removeObjectAtIndex: indexPath.row ];
 		[ _data insertObject: item atIndex: newIndexPath.row ];
 	}
+	[ tableView endUpdates ];
 }
 
 //------------------------------------------------------------------------------
@@ -547,9 +549,11 @@ static ASTSection* sectionFromObject( id sectionObject )
 	
 	UITableView* tableView = self.tableView;
 	if( tableView.style == UITableViewStyleGrouped ) {
+		[ tableView beginUpdates ];
 		[ self insertSections: sections atIndexes: indexes ];
 		[ tableView insertSections: indexSetFromArray( indexes )
 				withRowAnimation: animation ];
+		[ tableView endUpdates ];
 	}
 }
 
@@ -560,9 +564,11 @@ static ASTSection* sectionFromObject( id sectionObject )
 {
 	UITableView* tableView = self.tableView;
 	if( tableView.style == UITableViewStyleGrouped ) {
+		[ tableView beginUpdates ];
 		[ self removeSectionsAtIndexes: indexes ];
 		[ tableView deleteSections: indexSetFromArray( indexes )
 				withRowAnimation: animation ];
+		[ tableView endUpdates ];
 	}
 }
 
@@ -573,8 +579,10 @@ static ASTSection* sectionFromObject( id sectionObject )
 {
 	UITableView* tableView = self.tableView;
 	if( tableView.style == UITableViewStyleGrouped ) {
+		[ tableView beginUpdates ];
 		[ self moveSectionAtIndex: index toIndex: newIndex ];
 		[ tableView moveSection: index toSection: newIndex ];
+		[ tableView endUpdates ];
 	}
 }
 
@@ -585,8 +593,11 @@ static ASTSection* sectionFromObject( id sectionObject )
 {
 	NSParameterAssert( items.count == indexPaths.count );
 	
+	UITableView* tableView = self.tableView;
+	[ tableView beginUpdates ];
 	[ self insertItems: items atIndexPaths: indexPaths ];
 	[ self.tableView insertRowsAtIndexPaths: indexPaths withRowAnimation: animation ];
+	[ tableView endUpdates ];
 }
 
 //------------------------------------------------------------------------------
@@ -594,8 +605,11 @@ static ASTSection* sectionFromObject( id sectionObject )
 - (void) removeItemsAtIndexPaths: (NSArray*) indexPaths
 		withRowAnimation: (UITableViewRowAnimation) animation
 {
+	UITableView* tableView = self.tableView;
+	[ tableView beginUpdates ];
 	[ self removeItemsAtIndexPaths: indexPaths ];
 	[ self.tableView deleteRowsAtIndexPaths: indexPaths withRowAnimation: animation ];
+	[ tableView endUpdates ];
 }
 
 //------------------------------------------------------------------------------
@@ -605,8 +619,11 @@ static ASTSection* sectionFromObject( id sectionObject )
 {
 	NSAssert( [ self itemAtIndexPath: indexPath ] != nil, @"indexPath is not valid %@", indexPath );
 	
+	UITableView* tableView = self.tableView;
+	[ tableView beginUpdates ];
 	[ self moveItemAtIndexPath: indexPath toIndexPath: newIndexPath ];
 	[ self.tableView moveRowAtIndexPath: indexPath toIndexPath: newIndexPath ];
+	[ tableView endUpdates ];
 }
 
 //------------------------------------------------------------------------------
