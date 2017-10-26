@@ -47,6 +47,7 @@ NSString* const AST_selectable = @"selectable";
 NSString* const AST_selectAction = @"selectAction";
 NSString* const AST_selectActionTarget = @"selectActionTarget";
 NSString* const AST_selectActionBlock = @"selectActionBlock";
+NSString* const AST_deselectAutomatically = @"deselectAutomatically";
 
 NSString* const AST_targetSelf = @"self";
 NSString* const AST_targetTableViewController = @"AST_targetTableViewController";

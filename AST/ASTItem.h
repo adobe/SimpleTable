@@ -43,6 +43,7 @@ extern NSString* const AST_selectable;
 extern NSString* const AST_selectAction;
 extern NSString* const AST_selectActionTarget;
 extern NSString* const AST_selectActionBlock;
+extern NSString* const AST_deselectAutomatically;
 extern NSString* const AST_representedObject;
 extern NSString* const AST_prefKey;
 extern NSString* const AST_minimumHeight;
@@ -174,6 +175,8 @@ typedef void (^ASTItemActionBlock)( ASTItem* item );
 /// The block to be called when a row is selected. Note that the action and
 /// block are mutually exclusive and the action has precedence.
 @property (nullable,strong,nonatomic) ASTItemActionBlock selectBlock;
+/// Automatically deselect the row with animation after it is selected.
+@property (nonatomic) BOOL deselectAutomatically;
 
 /// Perform the selection action for the item, either calling the selector or
 /// calling the block, as appropriate.

@@ -172,6 +172,11 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 			_selectable = [ selectableValue boolValue ];
 		}
 		
+		id deselectValue = dict[ AST_deselectAutomatically ];
+		if( deselectValue ) {
+			_deselectAutomatically = [ deselectValue boolValue ];
+		}
+		
 		id cellClassValue = dict[ AST_cellClass ];
 		if( cellClassValue ) {
 			if( [ cellClassValue isKindOfClass: [ NSString class ] ] ) {
@@ -507,6 +512,10 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 		[ self sendAction: _selectAction to: target ];
 	} else if( _selectBlock ) {
 		_selectBlock( self );
+	}
+	
+	if( _deselectAutomatically ) {
+		[ self deselectWithAnimation: YES ];
 	}
 }
 
