@@ -815,7 +815,7 @@ static ASTSection* sectionFromObject( id sectionObject )
 		return result;
 	}
 	
-	return UITableViewAutomaticDimension;
+	return self.tableView.sectionHeaderHeight;
 }
 
 //------------------------------------------------------------------------------
@@ -842,7 +842,7 @@ static ASTSection* sectionFromObject( id sectionObject )
 		return result;
 	}
 	
-	return UITableViewAutomaticDimension;
+	return self.tableView.sectionFooterHeight;
 }
 
 //------------------------------------------------------------------------------
