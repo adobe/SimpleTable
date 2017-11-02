@@ -354,6 +354,9 @@
 	// view is shown can cause some strange animations when the table is first
 	// shown.
 	if( tableView.window == nil ) {
+		// We need to call reloadData here to inform the table that the data
+		// has changed.
+		[ tableView reloadData ];
 		return;
 	}
 	
