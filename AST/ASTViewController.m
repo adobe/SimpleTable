@@ -822,6 +822,10 @@ static ASTSection* sectionFromObject( id sectionObject )
 
 - (CGFloat) tableView: (UITableView*) tableView heightForFooterInSection: (NSInteger) section
 {
+	// FIXME: It appears that we should be able to replace all of this with
+	// `return UITableViewAutomaticDimension` but further testing should be
+	// done.
+	
 	assert( self.tableView.style == UITableViewStyleGrouped );
 	ASTSection* sectionData = _data[ section ];
 	UIView* footerView = sectionData.footerView;
