@@ -382,5 +382,39 @@
 
 //------------------------------------------------------------------------------
 
+- (void) setFooterView: (UIView*) footerView
+{
+	_footerView = footerView;
+	
+	UITableView* tableView = self.tableViewController.tableView;
+
+	// Check to see if the tableView has been shown yet, if not then do not
+	// bother to reload or invalidate the layout. Doing a reload before the
+	// view is shown can cause some strange animations when the table is first
+	// shown.
+	if( tableView.window == nil ) {
+		// We need to call reloadData here to inform the table that the data
+		// has changed.
+		[ tableView reloadData ];
+		return;
+	}
+
+	NSInteger index = self.index;
+	if( tableView && index >= 0 ) {
+		UITableViewHeaderFooterView* oldFooterView = [ tableView footerViewForSection: index ];
+		if( oldFooterView != nil && footerView != nil ) {
+			[ footerView setNeedsLayout ];
+		} else {
+			[ tableView reloadSections: [ NSIndexSet indexSetWithIndex: index ]
+					withRowAnimation: UITableViewRowAnimationNone ];
+			// Note that we are using UITableViewRowAnimationNone. Using
+			// UITableViewRowAnimationAutomatic seems to cause the sections items
+			// to not redraw properly.
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+
 @end
 

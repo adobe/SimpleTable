@@ -835,7 +835,9 @@ static ASTSection* sectionFromObject( id sectionObject )
 		}
 		CGSize fittingSize = tableView.bounds.size;
 		fittingSize.height = 10000;
-		CGFloat result = [ footerView systemLayoutSizeFittingSize: fittingSize ].height;
+		CGFloat result = ceil( [ footerView systemLayoutSizeFittingSize: fittingSize
+				withHorizontalFittingPriority: UILayoutPriorityDefaultHigh
+				verticalFittingPriority: 1 ].height );
 		if( wasNotInSuperview ) {
 			[ footerView removeFromSuperview ];
 		}
