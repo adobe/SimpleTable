@@ -126,4 +126,14 @@ extension Reactive where Base: ASTItem {
 		
     }
 
+	//--------------------------------------------------------------------------
+	
+	public func value<E>( _ type: E.Type, forKeyPath keyPath: String ) -> AnyObserver<E> {
+		
+		return Binder( self.base ) { element, value in
+			element.setValue( value, forKeyPath: keyPath )
+		}.asObserver()
+		
+	}
+
 }
