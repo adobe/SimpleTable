@@ -58,4 +58,14 @@ extension Reactive where Base: ASTSection {
 		
 	}
 
+	//--------------------------------------------------------------------------
+	
+	public var footerView: AnyObserver<UIView?> {
+		
+		return Binder( self.base ) { element, value in
+			element.footerView = value
+		}.asObserver()
+		
+	}
+
 }
