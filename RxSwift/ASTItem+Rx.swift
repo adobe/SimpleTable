@@ -113,7 +113,7 @@ extension Reactive where Base: ASTItem {
 						item.selectAction = action
 					},
 					callback: {
-						observer.on( .next() )
+						observer.on( .next( Void() ) )
 					}
 				)
                 return target

@@ -116,7 +116,7 @@ extension Reactive where Base: ASTTextViewItem {
 						textViewItem.textViewReturnKeyAction = action
 					},
 					callback: {
-						observer.on( .next() )
+						observer.on( .next( Void() ) )
 					}
 				)
 				return target

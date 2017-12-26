@@ -116,7 +116,7 @@ extension Reactive where Base: ASTTextFieldItem {
 						textFieldItem.textFieldReturnKeyAction = action
 					},
 					callback: {
-						observer.on( .next() )
+						observer.on( .next( Void() ) )
 					}
 				)
 				return target
@@ -176,7 +176,7 @@ class GenericActionTarget<Subject:AnyObject>: NSObject, Disposable {
 	
 	//--------------------------------------------------------------------------
 	
-	func action( _ sender: AnyObject ) {
+	@objc func action( _ sender: AnyObject ) {
 		
 		callback()
 		
