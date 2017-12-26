@@ -181,6 +181,9 @@ typedef void (^ASTItemActionBlock)( ASTItem* item );
 /// Perform the selection action for the item, either calling the selector or
 /// calling the block, as appropriate.
 - (void) performSelectionAction;
+/// Select the row for this item.
+- (void) selectWithAnimation: (BOOL) animated
+		scrollPosition: (UITableViewScrollPosition) scrollPosition;
 /// Deselect the row for this item.
 - (void) deselectWithAnimation: (BOOL) animated;
 

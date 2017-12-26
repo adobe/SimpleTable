@@ -521,6 +521,15 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 
 //------------------------------------------------------------------------------
 
+- (void) selectWithAnimation: (BOOL) animated
+		scrollPosition: (UITableViewScrollPosition) scrollPosition
+{
+	[ self.tableViewController selectItem: self withAnimation: animated
+			scrollPosition: scrollPosition ];
+}
+
+//------------------------------------------------------------------------------
+
 - (void) deselectWithAnimation: (BOOL) animated
 {
 	[ self.tableViewController deselectItem: self withAnimation: animated ];

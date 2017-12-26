@@ -145,6 +145,15 @@ typedef void (^ASTUpdateBlock)( void );
 
 // Selection
 
+/// Selects the item in the table view. This method performs a linear
+/// search and may not be performant. If you have the index path of the item
+/// then it is faster to use the selection methods on the table view.
+/// @param item An item to select in the table view.
+/// @param animated A flag indicating whether animation should be performed as
+/// the selection changes.
+- (void) selectItem: (ASTItem*) item withAnimation: (BOOL) animated
+		scrollPosition: (UITableViewScrollPosition) scrollPosition;
+
 /// Deselects the item in the table view. This method performs a linear
 /// search and may not be performant. If you have the index path of the item
 /// then it is faster to use the selection methods on the table view.

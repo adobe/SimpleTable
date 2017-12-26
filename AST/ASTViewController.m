@@ -628,6 +628,15 @@ static ASTSection* sectionFromObject( id sectionObject )
 
 //------------------------------------------------------------------------------
 
+- (void) selectItem: (ASTItem*) item withAnimation: (BOOL) animated
+		scrollPosition: (UITableViewScrollPosition) scrollPosition
+{
+	NSIndexPath* indexPath = [ self indexPathForItem: item ];
+	[ self.tableView selectRowAtIndexPath: indexPath animated: animated scrollPosition: scrollPosition ];
+}
+
+//------------------------------------------------------------------------------
+
 - (void) deselectItem: (ASTItem*) item withAnimation: (BOOL) animated
 {
 	NSIndexPath* indexPath = [ self indexPathForItem: item ];
