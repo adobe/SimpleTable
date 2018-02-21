@@ -164,3 +164,36 @@ func <-> ( textViewItem: ASTTextViewItem, variable: Variable<String> ) -> Dispos
 	
 }
 
+//------------------------------------------------------------------------------
+
+func <-> ( textViewItem: ASTTextViewItem, behavior: BehaviorRelay<String> ) -> Disposable {
+	
+	var changeFromUI = false
+	
+	let bindToUIDisposable = behavior.asObservable()
+		.filter { _ in !changeFromUI && !textViewItem.isEditing }
+		.bind( to: textViewItem.rx.text )
+	
+	let bindToBehavior = textViewItem.rx.text.changed
+		.subscribe( onNext: { textValue in
+			if textValue != behavior.value {
+				changeFromUI = true
+				behavior.accept( textValue )
+				changeFromUI = false
+			}
+		}, onCompleted: {
+			bindToUIDisposable.dispose()
+		} )
+
+	let bindEndEditingToBehavior = NotificationCenter.default.rx
+		.notification( NSNotification.Name.UITextViewTextDidEndEditing, object: textViewItem as AnyObject? )
+		.subscribe( onNext: { _ in
+			textViewItem.rx.text.onNext( behavior.value )
+		}, onCompleted: {
+			bindToUIDisposable.dispose()
+		} )
+
+	return Disposables.create( bindToUIDisposable, bindToBehavior, bindEndEditingToBehavior )
+	
+}
+
