@@ -546,6 +546,8 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 			objectReference = self;
 		} else if( [ objectReference isEqualToString: AST_targetTableViewController ] ) {
 			objectReference = self.tableViewController;
+		} else if( [ objectReference isEqualToString: AST_targetResponderChain ] ) {
+			objectReference = nil;
 		}
 	} else if( [ objectReference isKindOfClass: [ NSNull class ] ] ) {
 		objectReference = nil;

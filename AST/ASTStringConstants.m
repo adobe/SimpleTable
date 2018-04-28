@@ -51,6 +51,7 @@ NSString* const AST_deselectAutomatically = @"deselectAutomatically";
 
 NSString* const AST_targetSelf = @"self";
 NSString* const AST_targetTableViewController = @"AST_targetTableViewController";
+NSString* const AST_targetResponderChain = @"responderChain";
 
 NSString* const AST_prefKey = @"prefKey";
 

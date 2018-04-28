@@ -70,6 +70,7 @@ extern NSString* const AST_cell_detailTextLabel_font;
 
 extern NSString* const AST_targetSelf;
 extern NSString* const AST_targetTableViewController;
+extern NSString* const AST_targetResponderChain;
 
 @class ASTItem;
 @class ASTSection;
