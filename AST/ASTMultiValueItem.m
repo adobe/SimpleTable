@@ -46,8 +46,9 @@ static NSString* localizedStringFromUIKit( NSString* keyAndDefault )
 
 @interface ASTMultiValueItem() <UIActionSheetDelegate> {
 	NSDictionary* _valuesMap;
-	id _modalValue;
 }
+
+@property (readwrite) id modalValue;
 
 @end
 
@@ -238,10 +239,10 @@ static NSString* localizedStringFromUIKit( NSString* keyAndDefault )
 {
 	UIViewController* vc = self.tableViewController;
 	ASTViewController* selection = [ self buildSelectionController: ^( ASTItem* item ) {
-		_modalValue = item.representedObject;
+		self.modalValue = item.representedObject;
 	} ];
 	
-	_modalValue = _value;
+	self.modalValue = _value;
 	UINavigationController* nav = [ [ UINavigationController alloc ] initWithRootViewController: selection ];
 	selection.navigationItem.leftBarButtonItem = [ [ UIBarButtonItem alloc ]
 			initWithBarButtonSystemItem: UIBarButtonSystemItemCancel
@@ -346,7 +347,7 @@ static NSString* localizedStringFromUIKit( NSString* keyAndDefault )
 - (void) dismissModalViewController: (id) sender
 {
 	[ self.tableViewController dismissViewControllerAnimated: YES completion: nil ];
-	[ self selectedValue: _modalValue ];
+	[ self selectedValue: self.modalValue ];
 }
 
 // LCOV_EXCL_STOP
