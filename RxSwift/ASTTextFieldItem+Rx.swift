@@ -186,39 +186,6 @@ class GenericActionTarget<Subject:AnyObject>: NSObject, Disposable {
 
 //------------------------------------------------------------------------------
 
-func <-> ( textFieldItem: ASTTextFieldItem, variable: Variable<String> ) -> Disposable {
-	
-	var changeFromUI = false
-	
-	let bindToUIDisposable = variable.asObservable()
-		.filter { _ in !changeFromUI && !textFieldItem.isEditing }
-		.bind( to: textFieldItem.rx.text )
-	
-	let bindToVariable = textFieldItem.rx.text.changed
-		.subscribe( onNext: { textValue in
-			if textValue != variable.value {
-				changeFromUI = true
-				variable.value = textValue
-				changeFromUI = false
-			}
-		}, onCompleted: {
-			bindToUIDisposable.dispose()
-		} )
-
-	let bindEndEditingToVariable = NotificationCenter.default.rx
-		.notification( NSNotification.Name.UITextFieldTextDidEndEditing, object: textFieldItem as AnyObject? )
-		.subscribe( onNext: { _ in
-			textFieldItem.rx.text.onNext( variable.value )
-		}, onCompleted: {
-			bindToUIDisposable.dispose()
-		} )
-
-	return Disposables.create( bindToUIDisposable, bindToVariable, bindEndEditingToVariable )
-	
-}
-
-//------------------------------------------------------------------------------
-
 func <-> ( textFieldItem: ASTTextFieldItem, behavior: BehaviorRelay<String> ) -> Disposable {
 	
 	var changeFromUI = false

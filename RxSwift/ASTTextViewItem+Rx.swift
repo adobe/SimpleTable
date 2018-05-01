@@ -133,39 +133,6 @@ extension Reactive where Base: ASTTextViewItem {
 
 //------------------------------------------------------------------------------
 
-func <-> ( textViewItem: ASTTextViewItem, variable: Variable<String> ) -> Disposable {
-	
-	var changeFromUI = false
-	
-	let bindToUIDisposable = variable.asObservable()
-		.filter { _ in !changeFromUI && !textViewItem.isEditing }
-		.bind( to: textViewItem.rx.text )
-	
-	let bindToVariable = textViewItem.rx.text.changed
-		.subscribe( onNext: { textValue in
-			if textValue != variable.value {
-				changeFromUI = true
-				variable.value = textValue
-				changeFromUI = false
-			}
-		}, onCompleted: {
-			bindToUIDisposable.dispose()
-		} )
-
-	let bindEndEditingToVariable = NotificationCenter.default.rx
-		.notification( NSNotification.Name.UITextViewTextDidEndEditing, object: textViewItem as AnyObject? )
-		.subscribe( onNext: { _ in
-			textViewItem.rx.text.onNext( variable.value )
-		}, onCompleted: {
-			bindToUIDisposable.dispose()
-		} )
-
-	return Disposables.create( bindToUIDisposable, bindToVariable, bindEndEditingToVariable )
-	
-}
-
-//------------------------------------------------------------------------------
-
 func <-> ( textViewItem: ASTTextViewItem, behavior: BehaviorRelay<String> ) -> Disposable {
 	
 	var changeFromUI = false
