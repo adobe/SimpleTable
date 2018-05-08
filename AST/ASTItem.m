@@ -232,7 +232,11 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 
 - (void) removeFromContainerWithAnimation: (UITableViewRowAnimation) rowAnimation;
 {
-	[ self.tableViewController removeItemsAtIndexPaths: @[ self.indexPath ]
+	NSIndexPath* indexPath = self.indexPath;
+	if( indexPath == nil ) {
+		return;
+	}
+	[ self.tableViewController removeItemsAtIndexPaths: @[ indexPath ]
 			withRowAnimation: rowAnimation ];
 }
 
