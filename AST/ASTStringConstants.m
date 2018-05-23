@@ -60,6 +60,13 @@ NSString* const AST_minimumHeight = @"minimumHeight";
 NSString* const AST_representedObject = @"representedObject";
 
 //------------------------------------------------------------------------------
+// Note that in cases where we defined a UIAppearance property that maps to a
+// nested property that UIAppearance property should be used for the key path.
+// i.e. AST_cell_textLabel_textColor is defined using
+// "cellProperties.textLabelTextColor" and not
+// "cellProperties.textLabel.textColor" because otherwise setting the property
+// via the keypath could be overridden by UIAppearance. See
+// http://petersteinberger.com/blog/2013/uiappearance-for-custom-views/
 
 NSString* const AST_cell_accessoryType = @"cellProperties.accessoryType";
 NSString* const AST_cell_accessoryView = @"cellProperties.accessoryView";
@@ -69,13 +76,13 @@ NSString* const AST_cell_indentationLevel = @"cellProperties.indentationLevel";
 NSString* const AST_cell_indentationWidth = @"cellProperties.indentationWidth";
 NSString* const AST_cell_textLabel_text = @"cellProperties.textLabel.text";
 NSString* const AST_cell_textLabel_textAlignment = @"cellProperties.textLabel.textAlignment";
-NSString* const AST_cell_textLabel_textColor = @"cellProperties.textLabel.textColor";
-NSString* const AST_cell_textLabel_highlightedTextColor = @"cellProperties.textLabel.highlightedTextColor";
-NSString* const AST_cell_textLabel_font = @"cellProperties.textLabel.font";
+NSString* const AST_cell_textLabel_textColor = @"cellProperties.textLabelTextColor";
+NSString* const AST_cell_textLabel_highlightedTextColor = @"cellProperties.textLabelHighlightedTextColor";
+NSString* const AST_cell_textLabel_font = @"cellProperties.textLabelFont";
 NSString* const AST_cell_detailTextLabel_text = @"cellProperties.detailTextLabel.text";
-NSString* const AST_cell_detailTextLabel_textColor = @"cellProperties.detailTextLabel.textColor";
-NSString* const AST_cell_detailTextLabel_highlightedTextColor = @"cellProperties.detailTextLabel.highlightedTextColor";
-NSString* const AST_cell_detailTextLabel_font = @"cellProperties.detailTextLabel.font";
+NSString* const AST_cell_detailTextLabel_textColor = @"cellProperties.detailTextLabelTextColor";
+NSString* const AST_cell_detailTextLabel_highlightedTextColor = @"cellProperties.detailTextLabelHighlightedTextColor";
+NSString* const AST_cell_detailTextLabel_font = @"cellProperties.detailTextLabelFont";
 NSString* const AST_cell_imageView_image = @"cellProperties.imageView.image";
 NSString* const AST_cell_imageView_imageName = @"cellProperties.imageView.imageName";
 NSString* const AST_cell_imageView_highlightedImage = @"cellProperties.imageView.highlightedImage";
