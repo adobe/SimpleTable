@@ -501,6 +501,7 @@ static NSDictionary* removeNullsFromDictionaryLeavingCellProperties( NSDictionar
 				multiplier: 1
 				constant: _minimumHeight
 			];
+			minimumHeightConstraint.priority = UILayoutPriorityDefaultHigh;
 			minimumHeightConstraint.identifier = @"minimumHeightConstraint";
 			minimumHeightConstraint.active = YES;
 		}
