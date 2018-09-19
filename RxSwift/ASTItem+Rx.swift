@@ -76,7 +76,7 @@ extension Reactive where Base: ASTItem {
 	//--------------------------------------------------------------------------
 	// Bindable sink for `accessoryType` property.
 
-	public var accessoryType: AnyObserver<UITableViewCellAccessoryType> {
+	public var accessoryType: AnyObserver<UITableViewCell.AccessoryType> {
 		
 		return Binder( self.base ) { item, value in
 			item.setValue( value.rawValue, forKeyPath: AST_cell_accessoryType )
