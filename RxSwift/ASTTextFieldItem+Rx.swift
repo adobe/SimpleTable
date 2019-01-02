@@ -206,7 +206,7 @@ func <-> ( textFieldItem: ASTTextFieldItem, behavior: BehaviorRelay<String> ) ->
 		} )
 
 	let bindEndEditingToBehavior = NotificationCenter.default.rx
-		.notification( UITextField.textDidEndEditingNotification, object: textFieldItem as AnyObject? )
+		.notification( NSNotification.Name.UITextFieldTextDidEndEditing, object: textFieldItem as AnyObject? )
 		.subscribe( onNext: { _ in
 			textFieldItem.rx.text.onNext( behavior.value )
 		}, onCompleted: {

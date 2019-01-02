@@ -153,7 +153,7 @@ func <-> ( textViewItem: ASTTextViewItem, behavior: BehaviorRelay<String> ) -> D
 		} )
 
 	let bindEndEditingToBehavior = NotificationCenter.default.rx
-		.notification( UITextView.textDidEndEditingNotification, object: textViewItem as AnyObject? )
+		.notification( NSNotification.Name.UITextViewTextDidEndEditing, object: textViewItem as AnyObject? )
 		.subscribe( onNext: { _ in
 			textViewItem.rx.text.onNext( behavior.value )
 		}, onCompleted: {
