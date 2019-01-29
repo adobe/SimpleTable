@@ -99,6 +99,17 @@ extension Reactive where Base: ASTTextFieldItem {
 	}
 	
 	//--------------------------------------------------------------------------
+	// Bindable sink for `placeholder` property.
+
+	public var placeholder: AnyObserver<String?> {
+		
+		return Binder( self.base ) { textFieldItem, value in
+			textFieldItem.setValue( value, forKeyPath: AST_cell_textInput_placeholder )
+		}.asObserver()
+		
+	}
+	
+	//--------------------------------------------------------------------------
 	// Reactive wrapper for return key action
 	
 	public var returnKey: ControlEvent<Void> {
