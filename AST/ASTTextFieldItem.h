@@ -39,8 +39,10 @@ extern NSString* const AST_textFieldReturnKeyActionKey;
 extern NSString* const AST_textFieldReturnKeyTargetKey;
 
 extern NSString* const AST_cell_textInput_text;
+extern NSString* const AST_cell_textInput_font;
 extern NSString* const AST_cell_textInput_placeholder;
 extern NSString* const AST_cell_textInput_placeholderColor;
+extern NSString* const AST_cell_textInput_placeholderFont;
 extern NSString* const AST_cell_textInput_clearButtonMode;
 extern NSString* const AST_cell_textInput_returnKeyType;
 extern NSString* const AST_cell_textInput_keyboardType;
@@ -80,6 +82,7 @@ extern NSString* const AST_cell_textInput_delegate;
 @interface ASTTextField : UITextField
 
 @property (copy,nullable,nonatomic) UIColor* placeholderColor;
+@property (copy,nullable,nonatomic) UIFont* placeholderFont;
 
 @end
 

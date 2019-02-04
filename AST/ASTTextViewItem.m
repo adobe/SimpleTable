@@ -264,8 +264,12 @@ static void* ASTTextViewItemCellTextContext;
 		}
 
 		CGRect placeholderBounds = self.bounds;
+		UIFont* font = self.font;
+		if( self.placeholderFont ) {
+			font = self.placeholderFont;
+		}
 		NSDictionary* placeholderAttributes = @{
-			NSFontAttributeName : self.font,
+			NSFontAttributeName : font,
 			NSForegroundColorAttributeName : self.placeholderColor ?: defaultColor,
 		};
 		[ _placeholder drawInRect: placeholderBounds

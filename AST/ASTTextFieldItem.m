@@ -318,8 +318,13 @@
 			[ [ NSMutableParagraphStyle alloc ] init ];
 	paragraphStyle.alignment = self.textAlignment;
 	
+	UIFont* font = self.font;
+	if( self.placeholderFont ) {
+		font = self.placeholderFont;
+	}
+	
 	NSDictionary* drawAttributes = @{
-		NSFontAttributeName: self.font,
+		NSFontAttributeName: font,
 		NSParagraphStyleAttributeName : paragraphStyle,
 		NSForegroundColorAttributeName : _placeholderColor ?: defaultColor,
 	};

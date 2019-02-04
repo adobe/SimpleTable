@@ -64,6 +64,7 @@ extern NSString* const AST_cell_textInput_maxHeightInLines;
 
 @property (copy,nullable,nonatomic) NSString* placeholder;
 @property (copy,nullable,nonatomic) UIColor* placeholderColor;
+@property (copy,nullable,nonatomic) UIFont* placeholderFont;
 @property (nonatomic) NSUInteger minHeightInLines;
 @property (nonatomic) NSUInteger maxHeightInLines;
 
