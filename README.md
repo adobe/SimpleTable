@@ -84,3 +84,7 @@ This allows a runtime choice to be made without having to resort to adding items
 
 # Swift
 AST is currently written in Objective-C but works well with Swift. All APIs are decorated with Nullability annotations to improve Swift interoperability.
+
+# Contributing
+
+If you are interested in contributing to this project, check out our [contribution guidelines](CONTRIBUTING.md).
